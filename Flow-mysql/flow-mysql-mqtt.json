@@ -1,0 +1,131 @@
+[
+    {
+        "id": "24aeb0344a9adeeb",
+        "type": "tab",
+        "label": "Cargar MQTT a base de datos",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4a991469b1a1a2b6",
+        "type": "mqtt in",
+        "z": "24aeb0344a9adeeb",
+        "name": "",
+        "topic": "codigoIoT/esp32/dht",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "aa3107cbb6f29f72",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "eeef0f693f096fc8"
+            ]
+        ]
+    },
+    {
+        "id": "eeef0f693f096fc8",
+        "type": "json",
+        "z": "24aeb0344a9adeeb",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "c010296e73da68f7",
+                "4b6049f83d4842ea"
+            ]
+        ]
+    },
+    {
+        "id": "c010296e73da68f7",
+        "type": "function",
+        "z": "24aeb0344a9adeeb",
+        "name": "",
+        "func": "msg.topic=\"INSERT INTO dht (idd,temp,hum) VALUES ('\"+msg.payload.id+\"','\"+msg.payload.temp+\"','\"+msg.payload.hum+\"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "1655b65dc53eece4"
+            ]
+        ]
+    },
+    {
+        "id": "1655b65dc53eece4",
+        "type": "mysql",
+        "z": "24aeb0344a9adeeb",
+        "mydb": "5985bd1225719007",
+        "name": "",
+        "x": 780,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b6049f83d4842ea",
+        "type": "debug",
+        "z": "24aeb0344a9adeeb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "aa3107cbb6f29f72",
+        "type": "mqtt-broker",
+        "name": "LocalHost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "hugo-sub-nodered",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5985bd1225719007",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "datos",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
